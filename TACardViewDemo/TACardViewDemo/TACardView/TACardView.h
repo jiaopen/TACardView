@@ -14,19 +14,24 @@
 
 @required
 - (UIView *)cardView:(TACardView *)cardView viewAtIndex:(NSUInteger) index;
+- (NSUInteger)numberOfSubcardView:(TACardView *)cardView;
 
 @end
 
 @protocol TACardViewDelegate
 
+@optional
+- (void)cardView:(TACardView *)cardView willSildeCardView:(UIView *)view;
+- (void)cardView:(TACardView *)cardView sildingCardView:(UIView *)view;
+- (void)cardView:(TACardView *)cardView endSildeCardView:(UIView *)view;
 
 @end
 
 
-@interface TACardView : UIView
+IB_DESIGNABLE @interface TACardView : UIView
 
 @property (nonatomic, assign)   NSUInteger numberOfViewsPreview;
-@property (nonatomic, assign)   CGFloat edgeOffset;
+@property (nonatomic, assign)  IBInspectable CGFloat edgeOffset;
 @property (nonatomic, weak) id<TACardViewDelegate> delegate;
 @property (nonatomic, weak) id<TACardViewDataSource> dataSource;
 

@@ -31,9 +31,17 @@
 }
 
 -(UIView *)cardView:(TACardView *)cardView viewAtIndex:(NSUInteger)index {
-    UIView* subCardview = [UIView new];
+    UILabel* subCardview = [UILabel new];
     subCardview.backgroundColor = [UIColor randomColor];
+    subCardview.textAlignment = NSTextAlignmentCenter;
+    subCardview.font = [UIFont systemFontOfSize:200];
+    subCardview.text = [NSString stringWithFormat:@"%@", @(index)];
+    subCardview.userInteractionEnabled = YES;
     return subCardview;
+}
+
+-(NSUInteger)numberOfSubcardView:(TACardView *)cardView {
+    return 9;
 }
 
 @end
