@@ -16,23 +16,6 @@
 		BFFA681B1BC8DD7B00938BEE /* TACardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA681A1BC8DD7B00938BEE /* TACardView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		BFFA67FB1BC8DD3A00938BEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFFA67D91BC8DD3900938BEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BFFA67E01BC8DD3900938BEE;
-			remoteInfo = TACardViewDemo;
-		};
-		BFFA68061BC8DD3A00938BEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFFA67D91BC8DD3900938BEE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BFFA67E01BC8DD3900938BEE;
-			remoteInfo = TACardViewDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		BFFA67E11BC8DD3900938BEE /* TACardViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TACardViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA67E51BC8DD3900938BEE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -44,28 +27,12 @@
 		BFFA67F01BC8DD3900938BEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BFFA67F31BC8DD3900938BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BFFA67F51BC8DD3900938BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BFFA67FA1BC8DD3A00938BEE /* TACardViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TACardViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFFA68051BC8DD3A00938BEE /* TACardViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TACardViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFA68191BC8DD7B00938BEE /* TACardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TACardView.h; sourceTree = "<group>"; };
 		BFFA681A1BC8DD7B00938BEE /* TACardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TACardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BFFA67DE1BC8DD3900938BEE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFA67F71BC8DD3A00938BEE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFA68021BC8DD3A00938BEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -87,8 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				BFFA67E11BC8DD3900938BEE /* TACardViewDemo.app */,
-				BFFA67FA1BC8DD3A00938BEE /* TACardViewDemoTests.xctest */,
-				BFFA68051BC8DD3A00938BEE /* TACardViewDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,42 +112,6 @@
 			productReference = BFFA67E11BC8DD3900938BEE /* TACardViewDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BFFA67F91BC8DD3A00938BEE /* TACardViewDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BFFA68111BC8DD3A00938BEE /* Build configuration list for PBXNativeTarget "TACardViewDemoTests" */;
-			buildPhases = (
-				BFFA67F61BC8DD3A00938BEE /* Sources */,
-				BFFA67F71BC8DD3A00938BEE /* Frameworks */,
-				BFFA67F81BC8DD3A00938BEE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BFFA67FC1BC8DD3A00938BEE /* PBXTargetDependency */,
-			);
-			name = TACardViewDemoTests;
-			productName = TACardViewDemoTests;
-			productReference = BFFA67FA1BC8DD3A00938BEE /* TACardViewDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		BFFA68041BC8DD3A00938BEE /* TACardViewDemoUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BFFA68141BC8DD3A00938BEE /* Build configuration list for PBXNativeTarget "TACardViewDemoUITests" */;
-			buildPhases = (
-				BFFA68011BC8DD3A00938BEE /* Sources */,
-				BFFA68021BC8DD3A00938BEE /* Frameworks */,
-				BFFA68031BC8DD3A00938BEE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BFFA68071BC8DD3A00938BEE /* PBXTargetDependency */,
-			);
-			name = TACardViewDemoUITests;
-			productName = TACardViewDemoUITests;
-			productReference = BFFA68051BC8DD3A00938BEE /* TACardViewDemoUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -194,14 +123,6 @@
 				TargetAttributes = {
 					BFFA67E01BC8DD3900938BEE = {
 						CreatedOnToolsVersion = 7.0.1;
-					};
-					BFFA67F91BC8DD3A00938BEE = {
-						CreatedOnToolsVersion = 7.0.1;
-						TestTargetID = BFFA67E01BC8DD3900938BEE;
-					};
-					BFFA68041BC8DD3A00938BEE = {
-						CreatedOnToolsVersion = 7.0.1;
-						TestTargetID = BFFA67E01BC8DD3900938BEE;
 					};
 				};
 			};
@@ -219,8 +140,6 @@
 			projectRoot = "";
 			targets = (
 				BFFA67E01BC8DD3900938BEE /* TACardViewDemo */,
-				BFFA67F91BC8DD3A00938BEE /* TACardViewDemoTests */,
-				BFFA68041BC8DD3A00938BEE /* TACardViewDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -233,20 +152,6 @@
 				BFFA67F41BC8DD3900938BEE /* LaunchScreen.storyboard in Resources */,
 				BFFA67F11BC8DD3900938BEE /* Assets.xcassets in Resources */,
 				BFFA67EF1BC8DD3900938BEE /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFA67F81BC8DD3A00938BEE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFA68031BC8DD3A00938BEE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,34 +169,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BFFA67F61BC8DD3A00938BEE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFA68011BC8DD3A00938BEE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		BFFA67FC1BC8DD3A00938BEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BFFA67E01BC8DD3900938BEE /* TACardViewDemo */;
-			targetProxy = BFFA67FB1BC8DD3A00938BEE /* PBXContainerItemProxy */;
-		};
-		BFFA68071BC8DD3A00938BEE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BFFA67E01BC8DD3900938BEE /* TACardViewDemo */;
-			targetProxy = BFFA68061BC8DD3A00938BEE /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BFFA67ED1BC8DD3900938BEE /* Main.storyboard */ = {
@@ -415,54 +293,6 @@
 			};
 			name = Release;
 		};
-		BFFA68121BC8DD3A00938BEE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = TACardViewDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ziip.TACardViewDemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TACardViewDemo.app/TACardViewDemo";
-			};
-			name = Debug;
-		};
-		BFFA68131BC8DD3A00938BEE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = TACardViewDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ziip.TACardViewDemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TACardViewDemo.app/TACardViewDemo";
-			};
-			name = Release;
-		};
-		BFFA68151BC8DD3A00938BEE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = TACardViewDemoUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ziip.TACardViewDemoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = TACardViewDemo;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		BFFA68161BC8DD3A00938BEE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = TACardViewDemoUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ziip.TACardViewDemoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = TACardViewDemo;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -480,24 +310,6 @@
 			buildConfigurations = (
 				BFFA680F1BC8DD3A00938BEE /* Debug */,
 				BFFA68101BC8DD3A00938BEE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BFFA68111BC8DD3A00938BEE /* Build configuration list for PBXNativeTarget "TACardViewDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFA68121BC8DD3A00938BEE /* Debug */,
-				BFFA68131BC8DD3A00938BEE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BFFA68141BC8DD3A00938BEE /* Build configuration list for PBXNativeTarget "TACardViewDemoUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFA68151BC8DD3A00938BEE /* Debug */,
-				BFFA68161BC8DD3A00938BEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
