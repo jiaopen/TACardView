@@ -14,6 +14,7 @@
 		BFFA67F11BC8DD3900938BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFFA67F01BC8DD3900938BEE /* Assets.xcassets */; };
 		BFFA67F41BC8DD3900938BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFFA67F21BC8DD3900938BEE /* LaunchScreen.storyboard */; };
 		BFFA681B1BC8DD7B00938BEE /* TACardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA681A1BC8DD7B00938BEE /* TACardView.m */; settings = {ASSET_TAGS = (); }; };
+		BFFA681E1BCB59A500938BEE /* UIColor+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA681D1BCB59A500938BEE /* UIColor+Ex.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		BFFA67F51BC8DD3900938BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFFA68191BC8DD7B00938BEE /* TACardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TACardView.h; sourceTree = "<group>"; };
 		BFFA681A1BC8DD7B00938BEE /* TACardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TACardView.m; sourceTree = "<group>"; };
+		BFFA681C1BCB59A500938BEE /* UIColor+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Ex.h"; sourceTree = "<group>"; };
+		BFFA681D1BCB59A500938BEE /* UIColor+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Ex.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 			children = (
 				BFFA68191BC8DD7B00938BEE /* TACardView.h */,
 				BFFA681A1BC8DD7B00938BEE /* TACardView.m */,
+				BFFA681C1BCB59A500938BEE /* UIColor+Ex.h */,
+				BFFA681D1BCB59A500938BEE /* UIColor+Ex.m */,
 			);
 			path = TACardView;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFA67EC1BC8DD3900938BEE /* ViewController.m in Sources */,
+				BFFA681E1BCB59A500938BEE /* UIColor+Ex.m in Sources */,
 				BFFA681B1BC8DD7B00938BEE /* TACardView.m in Sources */,
 				BFFA67E91BC8DD3900938BEE /* AppDelegate.m in Sources */,
 				BFFA67E61BC8DD3900938BEE /* main.m in Sources */,

@@ -10,7 +10,7 @@
 
 @class TACardView;
 
-@protocol TACardViewDataSource
+@protocol TACardViewDataSource<NSObject>
 
 @required
 - (UIView *)cardView:(TACardView *)cardView viewAtIndex:(NSUInteger) index;
@@ -26,6 +26,7 @@
 @interface TACardView : UIView
 
 @property (nonatomic, assign)   NSUInteger numberOfViewsPreview;
+@property (nonatomic, assign)   CGFloat edgeOffset;
 @property (nonatomic, weak) id<TACardViewDelegate> delegate;
 @property (nonatomic, weak) id<TACardViewDataSource> dataSource;
 

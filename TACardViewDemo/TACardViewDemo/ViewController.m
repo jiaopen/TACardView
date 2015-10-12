@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 #import "TACardView.h"
+#import "UIColor+Ex.h"
 
-@interface ViewController ()
+@interface ViewController ()<TACardViewDelegate, TACardViewDataSource>
 
 @property (nonatomic, weak) IBOutlet TACardView *cardView;
 
@@ -17,14 +18,22 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+-(void)awakeFromNib
+{
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _cardView.delegate = self;
+    _cardView.dataSource = self;
+
+}
+
+-(UIView *)cardView:(TACardView *)cardView viewAtIndex:(NSUInteger)index {
+    UIView* subCardview = [UIView new];
+    subCardview.backgroundColor = [UIColor randomColor];
+    return subCardview;
 }
 
 @end
