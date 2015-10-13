@@ -9,7 +9,7 @@
 #import "TACardView.h"
 #import "TAPanGestureRecognizer.h"
 
-@interface TACardView ()
+@interface TACardView ()<UICollisionBehaviorDelegate>
 
 @property (nonatomic, assign)   BOOL needLoadData;
 @property (nonatomic, assign)   NSUInteger numberOfSubcardViews;
@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (strong, nonatomic) UISnapBehavior *snapBehavior;
 @property (strong, nonatomic) UIAttachmentBehavior *attachmentBehavior;
-@property (strong, nonatomic) UIAttachmentBehavior *attachViewAttachmentBehavior;
+@property (strong, nonatomic) UIAttachmentBehavior *anchorViewAttachmentBehavior;
 @property (strong, nonatomic) UIView *anchorContainerView;
 @property (strong, nonatomic) UIView *anchorView;
 @property (nonatomic) BOOL isAttachViewVisible;
@@ -87,14 +87,12 @@ IB_DESIGNABLE @implementation TACardView
     UIView *currentCard = recognizer.view;
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        [self createAttachViewForCover:currentCard
-                            atLocation:location
-         shouldAttachAnchorViewToPoint:YES];
+        [self createAttachViewForCover:currentCard atLocation:location shouldAttachAnchorViewToPoint:YES];
         if ([_delegate respondsToSelector:@selector(cardView:willSildeCardView:)]) {
             [_delegate cardView:self willSildeCardView:currentCard];
         }
     }else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        _attachViewAttachmentBehavior.anchorPoint = location;
+        _anchorViewAttachmentBehavior.anchorPoint = location;
         if ([_delegate respondsToSelector:@selector(cardView:sildingCardView:)]) {
             [_delegate cardView:self sildingCardView:currentCard];
         }
@@ -102,18 +100,44 @@ IB_DESIGNABLE @implementation TACardView
         recognizer.state == UIGestureRecognizerStateCancelled) {
         CGPoint velocity = [recognizer velocityInView:self];
         CGFloat velocityMagnitude = sqrtf(powf(velocity.x, 2) + powf(velocity.y, 2));
-        CGPoint normalizedVelocity = CGPointMake(velocity.x / velocityMagnitude, velocity.y / velocityMagnitude);
         CGFloat translationMagnitude = sqrtf(translation.x * translation.x +
                                              translation.y * translation.y);
-        CGVector directionVector = CGVectorMake(translation.x / translationMagnitude,
-                     translation.y / translationMagnitude);
+        CGVector directionVector = CGVectorMake(translation.x / translationMagnitude * 1000,
+                     translation.y / translationMagnitude * 1000);
         
-        
-        
-        if ([_delegate respondsToSelector:@selector(cardView:endSildeCardView:)]) {
-            [_delegate cardView:self endSildeCardView:currentCard];
+        if ((ABS(translation.x) > ABS(translation.y) ? ABS(translation.x) : ABS(translation.y) > 0.2 * self.bounds.size.width || velocityMagnitude > 750)) {
+            [_dynamicAnimator removeBehavior:_anchorViewAttachmentBehavior];
+            
+            UICollisionBehavior *collisionBehavior = [self collisionBehaviorThatBoundsView:_anchorView inRect:[self defaultCollisionRect]];
+            collisionBehavior.collisionDelegate = self;
+            [_dynamicAnimator addBehavior:collisionBehavior];
+            
+            UIPushBehavior *pushBehavior = [self pushBehaviorToPushView:_anchorView direction:directionVector];
+            [_dynamicAnimator addBehavior:pushBehavior];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self loadNextSubcardView];
+            });
+            [_anchorView removeFromSuperview];
+            _anchorView = nil;
+            
+            if ([_delegate respondsToSelector:@selector(cardView:endSildeCardView:)]) {
+                [_delegate cardView:self endSildeCardView:currentCard];
+            }
+        } else {
+            [_dynamicAnimator removeBehavior:_attachmentBehavior];
+            [_dynamicAnimator removeBehavior:_anchorViewAttachmentBehavior];
+            
+            [_anchorView removeFromSuperview];
+            _snapBehavior = [self snapBehaviorFromSnapView:currentCard toPoint:CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2)];
+            [_dynamicAnimator addBehavior:_snapBehavior];
+            
+            if ([_delegate respondsToSelector:@selector(cardView:cancelSildeCardView:)]) {
+                [_delegate cardView:self cancelSildeCardView:currentCard];
+            }
         }
-        [self loadNextSubcardView];
+        
+       
     }
 }
 
@@ -136,7 +160,7 @@ IB_DESIGNABLE @implementation TACardView
     if (_previewIndexArray.count > 0) {
         [_previewIndexArray removeObjectAtIndex:0];
     }
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [_containerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSUInteger i = _containerView.subviews.count - idx - 1;
             obj.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
@@ -176,7 +200,7 @@ IB_DESIGNABLE @implementation TACardView
         [self attachmentBehaviorFromView:_anchorView
                                         toPoint:location];
         [_dynamicAnimator addBehavior:attachToPoint];
-        _attachViewAttachmentBehavior = attachToPoint;
+        _anchorViewAttachmentBehavior = attachToPoint;
     }
 }
 
@@ -202,5 +226,82 @@ IB_DESIGNABLE @implementation TACardView
     attachmentBehavior.damping = 100;
     attachmentBehavior.length = 0;
     return attachmentBehavior;
+}
+
+- (UISnapBehavior *)snapBehaviorFromSnapView:(UIView *)view toPoint:(CGPoint)point {
+    if (!view) {
+        return nil;
+    }
+    UISnapBehavior *snapBehavior = [[UISnapBehavior alloc] initWithItem:view snapToPoint:point];
+    snapBehavior.damping = 0.75f;
+    return snapBehavior;
+}
+
+- (UICollisionBehavior *)collisionBehaviorThatBoundsView:(UIView *)view inRect:(CGRect)rect {
+    if (!view) {
+        return nil;
+    }
+    UICollisionBehavior *collisionBehavior =
+    [[UICollisionBehavior alloc] initWithItems:@[ view ]];
+    UIBezierPath *collisionBound = [UIBezierPath bezierPathWithRect:rect];
+    [collisionBehavior addBoundaryWithIdentifier:@"c" forPath:collisionBound];
+    collisionBehavior.collisionMode = UICollisionBehaviorModeBoundaries;
+    return collisionBehavior;
+}
+
+- (CGRect)defaultCollisionRect {
+    CGSize viewSize = [UIScreen mainScreen].bounds.size;
+    CGFloat collisionSizeScale = 6;
+    CGSize collisionSize = CGSizeMake(viewSize.width * collisionSizeScale,
+                                      viewSize.height * collisionSizeScale);
+    CGRect collisionRect =
+    CGRectMake(-collisionSize.width / 2 + viewSize.width / 2,
+               -collisionSize.height / 2 + viewSize.height / 2,
+               collisionSize.width, collisionSize.height);
+    return collisionRect;
+}
+
+- (UIPushBehavior *)pushBehaviorToPushView:(UIView *)view direction:(CGVector)direction {
+    if (!view) {
+        return nil;
+    }
+    UIPushBehavior *pushBehavior = [[UIPushBehavior alloc] initWithItems:@[view] mode:UIPushBehaviorModeInstantaneous];
+    pushBehavior.pushDirection = direction;
+    return pushBehavior;
+}
+
+#pragma mark - UICollisionBehaviorDelegate
+
+- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier {
+    NSMutableSet *viewsToRemove = [[NSMutableSet alloc] init];
+    
+    for (id aBehavior in _dynamicAnimator.behaviors) {
+        if ([aBehavior isKindOfClass:[UIAttachmentBehavior class]]) {
+            NSArray *items = ((UIAttachmentBehavior *)aBehavior).items;
+            if ([items containsObject:item]) {
+                [_dynamicAnimator removeBehavior:aBehavior];
+                [viewsToRemove addObjectsFromArray:items];
+            }
+        }
+        if ([aBehavior isKindOfClass:[UIPushBehavior class]]) {
+            NSArray *items = ((UIPushBehavior *)aBehavior).items;
+            if ([((UIPushBehavior *)aBehavior).items containsObject:item]) {
+                if ([items containsObject:item]) {
+                    [_dynamicAnimator removeBehavior:aBehavior];
+                    [viewsToRemove addObjectsFromArray:items];
+                }
+            }
+        }
+        if ([aBehavior isKindOfClass:[UICollisionBehavior class]]) {
+            NSArray *items = ((UICollisionBehavior *)aBehavior).items;
+            if ([((UICollisionBehavior *)aBehavior).items
+                 containsObject:item]) {
+                if ([items containsObject:item]) {
+                    [_dynamicAnimator removeBehavior:aBehavior];
+                    [viewsToRemove addObjectsFromArray:items];
+                }
+            }
+        }
+    }
 }
 @end

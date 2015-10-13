@@ -39,6 +39,7 @@ typedef NS_ENUM(NSUInteger, ZLSwipeableViewDirection) {
 - (void)cardView:(TACardView *)cardView willSildeCardView:(UIView *)view;
 - (void)cardView:(TACardView *)cardView sildingCardView:(UIView *)view;
 - (void)cardView:(TACardView *)cardView endSildeCardView:(UIView *)view;
+- (void)cardView:(TACardView *)cardView cancelSildeCardView:(UIView *)view;
 
 @end
 

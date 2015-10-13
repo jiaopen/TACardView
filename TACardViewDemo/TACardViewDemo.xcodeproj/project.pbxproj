@@ -16,6 +16,10 @@
 		BFFA681B1BC8DD7B00938BEE /* TACardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA681A1BC8DD7B00938BEE /* TACardView.m */; settings = {ASSET_TAGS = (); }; };
 		BFFA681E1BCB59A500938BEE /* UIColor+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA681D1BCB59A500938BEE /* UIColor+Ex.m */; settings = {ASSET_TAGS = (); }; };
 		BFFA68211BCC97F800938BEE /* TAPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFA68201BCC97F800938BEE /* TAPanGestureRecognizer.m */; settings = {ASSET_TAGS = (); }; };
+		BFFA68261BCCDFE500938BEE /* 111.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BFFA68221BCCDFE500938BEE /* 111.jpeg */; settings = {ASSET_TAGS = (); }; };
+		BFFA68271BCCDFE500938BEE /* 222.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BFFA68231BCCDFE500938BEE /* 222.jpeg */; settings = {ASSET_TAGS = (); }; };
+		BFFA68281BCCDFE500938BEE /* 333.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BFFA68241BCCDFE500938BEE /* 333.jpeg */; settings = {ASSET_TAGS = (); }; };
+		BFFA68291BCCDFE500938BEE /* 444.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BFFA68251BCCDFE500938BEE /* 444.jpeg */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		BFFA681D1BCB59A500938BEE /* UIColor+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Ex.m"; sourceTree = "<group>"; };
 		BFFA681F1BCC97F800938BEE /* TAPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPanGestureRecognizer.h; sourceTree = "<group>"; };
 		BFFA68201BCC97F800938BEE /* TAPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPanGestureRecognizer.m; sourceTree = "<group>"; };
+		BFFA68221BCCDFE500938BEE /* 111.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 111.jpeg; sourceTree = "<group>"; };
+		BFFA68231BCCDFE500938BEE /* 222.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 222.jpeg; sourceTree = "<group>"; };
+		BFFA68241BCCDFE500938BEE /* 333.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 333.jpeg; sourceTree = "<group>"; };
+		BFFA68251BCCDFE500938BEE /* 444.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 444.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,10 @@
 				BFFA67F01BC8DD3900938BEE /* Assets.xcassets */,
 				BFFA67F21BC8DD3900938BEE /* LaunchScreen.storyboard */,
 				BFFA67F51BC8DD3900938BEE /* Info.plist */,
+				BFFA68221BCCDFE500938BEE /* 111.jpeg */,
+				BFFA68231BCCDFE500938BEE /* 222.jpeg */,
+				BFFA68241BCCDFE500938BEE /* 333.jpeg */,
+				BFFA68251BCCDFE500938BEE /* 444.jpeg */,
 				BFFA67E41BC8DD3900938BEE /* Supporting Files */,
 			);
 			path = TACardViewDemo;
@@ -160,8 +172,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFA67F41BC8DD3900938BEE /* LaunchScreen.storyboard in Resources */,
+				BFFA68291BCCDFE500938BEE /* 444.jpeg in Resources */,
+				BFFA68271BCCDFE500938BEE /* 222.jpeg in Resources */,
 				BFFA67F11BC8DD3900938BEE /* Assets.xcassets in Resources */,
+				BFFA68281BCCDFE500938BEE /* 333.jpeg in Resources */,
 				BFFA67EF1BC8DD3900938BEE /* Main.storyboard in Resources */,
+				BFFA68261BCCDFE500938BEE /* 111.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

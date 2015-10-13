@@ -13,6 +13,7 @@
 @interface ViewController ()<TACardViewDelegate, TACardViewDataSource>
 
 @property (nonatomic, weak) IBOutlet TACardView *cardView;
+@property (nonatomic, strong) NSArray<UIImage*> *imageArray;
 
 @end
 
@@ -27,15 +28,15 @@
     [super viewDidLoad];
     _cardView.delegate = self;
     _cardView.dataSource = self;
-
+    _imageArray = @[[UIImage imageNamed:@"111.jpeg"], [UIImage imageNamed:@"222.jpeg"], [UIImage imageNamed:@"333.jpeg"], [UIImage imageNamed:@"444.jpeg"]];
 }
 
 -(UIView *)cardView:(TACardView *)cardView viewAtIndex:(NSUInteger)index {
-    UILabel* subCardview = [UILabel new];
+    UIImageView* subCardview = [[UIImageView alloc] initWithImage:_imageArray[index%4]];
     subCardview.backgroundColor = [UIColor randomColor];
-    subCardview.textAlignment = NSTextAlignmentCenter;
-    subCardview.font = [UIFont systemFontOfSize:200];
-    subCardview.text = [NSString stringWithFormat:@"%@", @(index)];
+//    subCardview.textAlignment = NSTextAlignmentRight;
+//    subCardview.font = [UIFont systemFontOfSize:200];
+//    subCardview.text = [NSString stringWithFormat:@"%@", @(index)];
     subCardview.userInteractionEnabled = YES;
     return subCardview;
 }
