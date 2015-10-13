@@ -7,6 +7,7 @@
 //
 
 #import "TACardView.h"
+#import "TAPanGestureRecognizer.h"
 
 @interface TACardView ()
 
@@ -14,7 +15,13 @@
 @property (nonatomic, assign)   NSUInteger numberOfSubcardViews;
 @property (nonatomic, strong)   UIView* containerView;
 @property (nonatomic, strong)   NSMutableArray<NSNumber *>* previewIndexArray;
-
+@property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
+@property (strong, nonatomic) UISnapBehavior *snapBehavior;
+@property (strong, nonatomic) UIAttachmentBehavior *attachmentBehavior;
+@property (strong, nonatomic) UIAttachmentBehavior *attachViewAttachmentBehavior;
+@property (strong, nonatomic) UIView *anchorContainerView;
+@property (strong, nonatomic) UIView *anchorView;
+@property (nonatomic) BOOL isAttachViewVisible;
 @end
 
 IB_DESIGNABLE @implementation TACardView
@@ -42,11 +49,15 @@ IB_DESIGNABLE @implementation TACardView
 }
 
 - (void)setup {
+    _anchorContainerView =
+    [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    [self addSubview:_anchorContainerView];
     _previewIndexArray = [NSMutableArray array];
     _needLoadData = YES;
     _numberOfViewsPreview = 3;
     _edgeOffset = 10;
     _containerView = [[UIView alloc] initWithFrame:self.bounds];
+    _dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
     [self addSubview:_containerView];
 }
 
@@ -64,14 +75,46 @@ IB_DESIGNABLE @implementation TACardView
             [_containerView sendSubviewToBack:subcard];
             [_previewIndexArray addObject:@(i)];
             if (i == 0) {
-                [subcard addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]];
+                [subcard addGestureRecognizer:[[TAPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
             }
         }
     }
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)recognizer {
-    [self loadNextSubcardView];
+- (void)handlePan:(TAPanGestureRecognizer *)recognizer {
+    CGPoint translation = [recognizer translationInView:self];
+    CGPoint location = [recognizer locationInView:self];
+    UIView *currentCard = recognizer.view;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self createAttachViewForCover:currentCard
+                            atLocation:location
+         shouldAttachAnchorViewToPoint:YES];
+        if ([_delegate respondsToSelector:@selector(cardView:willSildeCardView:)]) {
+            [_delegate cardView:self willSildeCardView:currentCard];
+        }
+    }else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        _attachViewAttachmentBehavior.anchorPoint = location;
+        if ([_delegate respondsToSelector:@selector(cardView:sildingCardView:)]) {
+            [_delegate cardView:self sildingCardView:currentCard];
+        }
+    }else if (recognizer.state == UIGestureRecognizerStateEnded ||
+        recognizer.state == UIGestureRecognizerStateCancelled) {
+        CGPoint velocity = [recognizer velocityInView:self];
+        CGFloat velocityMagnitude = sqrtf(powf(velocity.x, 2) + powf(velocity.y, 2));
+        CGPoint normalizedVelocity = CGPointMake(velocity.x / velocityMagnitude, velocity.y / velocityMagnitude);
+        CGFloat translationMagnitude = sqrtf(translation.x * translation.x +
+                                             translation.y * translation.y);
+        CGVector directionVector = CGVectorMake(translation.x / translationMagnitude,
+                     translation.y / translationMagnitude);
+        
+        
+        
+        if ([_delegate respondsToSelector:@selector(cardView:endSildeCardView:)]) {
+            [_delegate cardView:self endSildeCardView:currentCard];
+        }
+        [self loadNextSubcardView];
+    }
 }
 
 -(void)layoutSubviews
@@ -87,7 +130,7 @@ IB_DESIGNABLE @implementation TACardView
     if (_containerView.subviews.count > 0) {
         [_containerView.subviews.lastObject removeFromSuperview];
         if (_containerView.subviews.count > 0) {
-            [_containerView.subviews.lastObject addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]];
+            [_containerView.subviews.lastObject addGestureRecognizer:[[TAPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
         }
     }
     if (_previewIndexArray.count > 0) {
@@ -109,5 +152,55 @@ IB_DESIGNABLE @implementation TACardView
         [_containerView sendSubviewToBack:subcard];
         [_previewIndexArray addObject:@(nextIndex)];
     }
+}
+
+
+- (void)createAttachViewForCover:(UIView *)view
+                      atLocation:(CGPoint)location
+   shouldAttachAnchorViewToPoint:(BOOL)shouldAttachToPoint {
+    [_dynamicAnimator removeBehavior:_snapBehavior];
+    _snapBehavior = nil;
+    
+    _anchorView = [[UIView alloc] initWithFrame:CGRectMake(location.x - 500,location.y - 500, 1000, 1000)];
+    [_anchorView setBackgroundColor:[UIColor blueColor]];
+    [_anchorView setHidden:!_isAttachViewVisible];
+    [_anchorContainerView addSubview:_anchorView];
+    UIAttachmentBehavior *attachToView =
+    [self attachmentBehaviorFromView:view
+                                     toView:_anchorView];
+    [_dynamicAnimator addBehavior:attachToView];
+    _attachmentBehavior = attachToView;
+    
+    if (shouldAttachToPoint) {
+        UIAttachmentBehavior *attachToPoint =
+        [self attachmentBehaviorFromView:_anchorView
+                                        toPoint:location];
+        [_dynamicAnimator addBehavior:attachToPoint];
+        _attachViewAttachmentBehavior = attachToPoint;
+    }
+}
+
+- (UIAttachmentBehavior *)attachmentBehaviorFromView:(UIView *)view toView:(UIView *)attachView {
+    if (!view) {
+        return nil;
+    }
+    CGPoint attachPoint = attachView.center;
+    CGPoint p = [self convertPoint:view.center toView:self];
+    UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:view offsetFromCenter:UIOffsetMake(-(p.x - attachPoint.x),
+                                                                      -(p.y - attachPoint.y)) attachedToItem:attachView offsetFromCenter:UIOffsetMake(0, 0)];
+    attachment.length = 0;
+    return attachment;
+}
+
+- (UIAttachmentBehavior *)attachmentBehaviorFromView:(UIView *)view toPoint:(CGPoint)point {
+    if (!view) {
+        return nil;
+    }
+    
+    CGPoint p = view.center;
+    UIAttachmentBehavior *attachmentBehavior = [[UIAttachmentBehavior alloc]initWithItem:view offsetFromCenter:UIOffsetMake(-(p.x - point.x), -(p.y - point.y)) attachedToAnchor:point];
+    attachmentBehavior.damping = 100;
+    attachmentBehavior.length = 0;
+    return attachmentBehavior;
 }
 @end

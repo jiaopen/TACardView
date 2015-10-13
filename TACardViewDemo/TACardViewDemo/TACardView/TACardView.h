@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef NS_ENUM(NSUInteger, ZLSwipeableViewDirection) {
+    ZLSwipeableViewDirectionNone = 0,
+    ZLSwipeableViewDirectionLeft = (1 << 0),
+    ZLSwipeableViewDirectionRight = (1 << 1),
+    ZLSwipeableViewDirectionHorizontal = ZLSwipeableViewDirectionLeft |
+    ZLSwipeableViewDirectionRight,
+    ZLSwipeableViewDirectionUp = (1 << 2),
+    ZLSwipeableViewDirectionDown = (1 << 3),
+    ZLSwipeableViewDirectionVertical = ZLSwipeableViewDirectionUp |
+    ZLSwipeableViewDirectionDown,
+    ZLSwipeableViewDirectionAll = ZLSwipeableViewDirectionHorizontal |
+    ZLSwipeableViewDirectionVertical,
+};
+
 @class TACardView;
 
 @protocol TACardViewDataSource<NSObject>
@@ -18,7 +33,7 @@
 
 @end
 
-@protocol TACardViewDelegate
+@protocol TACardViewDelegate<NSObject>
 
 @optional
 - (void)cardView:(TACardView *)cardView willSildeCardView:(UIView *)view;
