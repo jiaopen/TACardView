@@ -49,8 +49,7 @@ IB_DESIGNABLE @implementation TACardView
 }
 
 - (void)setup {
-    _anchorContainerView =
-    [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    _anchorContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     [self addSubview:_anchorContainerView];
     _previewIndexArray = [NSMutableArray array];
     _needLoadData = YES;
@@ -102,8 +101,7 @@ IB_DESIGNABLE @implementation TACardView
         CGFloat velocityMagnitude = sqrtf(powf(velocity.x, 2) + powf(velocity.y, 2));
         CGFloat translationMagnitude = sqrtf(translation.x * translation.x +
                                              translation.y * translation.y);
-        CGVector directionVector = CGVectorMake(translation.x / translationMagnitude * 1000,
-                     translation.y / translationMagnitude * 1000);
+        CGVector directionVector = CGVectorMake(translation.x / translationMagnitude * 2000, translation.y / translationMagnitude * 2000);
         
         if ((ABS(translation.x) > ABS(translation.y) ? ABS(translation.x) : ABS(translation.y) > 0.2 * self.bounds.size.width || velocityMagnitude > 750)) {
             [_dynamicAnimator removeBehavior:_anchorViewAttachmentBehavior];
@@ -189,16 +187,13 @@ IB_DESIGNABLE @implementation TACardView
     [_anchorView setBackgroundColor:[UIColor blueColor]];
     [_anchorView setHidden:!_isAttachViewVisible];
     [_anchorContainerView addSubview:_anchorView];
-    UIAttachmentBehavior *attachToView =
-    [self attachmentBehaviorFromView:view
+    UIAttachmentBehavior *attachToView = [self attachmentBehaviorFromView:view
                                      toView:_anchorView];
     [_dynamicAnimator addBehavior:attachToView];
     _attachmentBehavior = attachToView;
     
     if (shouldAttachToPoint) {
-        UIAttachmentBehavior *attachToPoint =
-        [self attachmentBehaviorFromView:_anchorView
-                                        toPoint:location];
+        UIAttachmentBehavior *attachToPoint = [self attachmentBehaviorFromView:_anchorView toPoint:location];
         [_dynamicAnimator addBehavior:attachToPoint];
         _anchorViewAttachmentBehavior = attachToPoint;
     }
@@ -210,8 +205,7 @@ IB_DESIGNABLE @implementation TACardView
     }
     CGPoint attachPoint = attachView.center;
     CGPoint p = [self convertPoint:view.center toView:self];
-    UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:view offsetFromCenter:UIOffsetMake(-(p.x - attachPoint.x),
-                                                                      -(p.y - attachPoint.y)) attachedToItem:attachView offsetFromCenter:UIOffsetMake(0, 0)];
+    UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:view offsetFromCenter:UIOffsetMake(-(p.x - attachPoint.x),-(p.y - attachPoint.y)) attachedToItem:attachView offsetFromCenter:UIOffsetMake(0, 0)];
     attachment.length = 0;
     return attachment;
 }
