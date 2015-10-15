@@ -42,7 +42,7 @@
 }
 
 -(NSUInteger)numberOfSubcardView:(TACardView *)cardView {
-    return 9;
+    return 4;
 }
 
 @end

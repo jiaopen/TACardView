@@ -164,15 +164,17 @@ IB_DESIGNABLE @implementation TACardView
             obj.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
         }];
     }];
-    if ([_dataSource respondsToSelector:@selector(cardView:viewAtIndex:)]) {
+    if ([_dataSource respondsToSelector:@selector(cardView:viewAtIndex:)] && _previewIndexArray.count > 0) {
         NSUInteger nextIndex = _previewIndexArray.lastObject.unsignedIntegerValue + 1;
-        UIView* subcard = [_dataSource cardView:self viewAtIndex: nextIndex];
-        NSUInteger i = _numberOfViewsPreview - 1;
-        subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
+        if (nextIndex < _numberOfSubcardViews) {
+            UIView* subcard = [_dataSource cardView:self viewAtIndex: nextIndex];
+            NSUInteger i = _numberOfViewsPreview - 1;
+            subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
 
-        [_containerView addSubview:subcard];
-        [_containerView sendSubviewToBack:subcard];
-        [_previewIndexArray addObject:@(nextIndex)];
+            [_containerView addSubview:subcard];
+            [_containerView sendSubviewToBack:subcard];
+            [_previewIndexArray addObject:@(nextIndex)];
+        }
     }
 }
 
