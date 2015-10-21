@@ -54,7 +54,7 @@ IB_DESIGNABLE @implementation TACardView
     _previewIndexArray = [NSMutableArray array];
     _needLoadData = YES;
     _numberOfViewsPreview = 3;
-    _edgeOffset = 10;
+    _edgeOffset = 8;
     _containerView = [[UIView alloc] initWithFrame:self.bounds];
     _dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
     [self addSubview:_containerView];
