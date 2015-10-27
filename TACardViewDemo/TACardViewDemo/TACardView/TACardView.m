@@ -141,11 +141,12 @@ IB_DESIGNABLE @implementation TACardView
 
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
+    _containerView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     if (_needLoadData) {
         [self loadData];
     }
     _needLoadData = NO;
-    [super layoutSubviews];
 }
 
 -(void) loadNextSubcardView {
