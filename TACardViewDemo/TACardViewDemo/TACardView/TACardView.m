@@ -166,7 +166,7 @@ IB_DESIGNABLE @implementation TACardView
         }];
     }];
     if ([_dataSource respondsToSelector:@selector(cardView:viewAtIndex:)] && _previewIndexArray.count > 0) {
-        NSUInteger nextIndex = _previewIndexArray.lastObject.unsignedIntegerValue + 1;
+        NSUInteger nextIndex = (_previewIndexArray.lastObject.unsignedIntegerValue + 1) %  (_isCyclicDisplay ? (_numberOfSubcardViews - 1) : 1);
         if (nextIndex < _numberOfSubcardViews) {
             UIView* subcard = [_dataSource cardView:self viewAtIndex: nextIndex];
             NSUInteger i = _numberOfViewsPreview - 1;

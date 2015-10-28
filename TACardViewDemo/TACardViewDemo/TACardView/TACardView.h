@@ -47,7 +47,7 @@ typedef NS_ENUM(NSUInteger, ZLSwipeableViewDirection) {
 IB_DESIGNABLE @interface TACardView : UIView
 
 @property (nonatomic, assign)   NSUInteger numberOfViewsPreview;
-@property (nonatomic, assign)   BOOL shouldRepeat;
+@property (nonatomic, assign)   BOOL isCyclicDisplay;
 @property (nonatomic, assign)  IBInspectable CGFloat edgeOffset;
 @property (nonatomic, weak) id<TACardViewDelegate> delegate;
 @property (nonatomic, weak) id<TACardViewDataSource> dataSource;
