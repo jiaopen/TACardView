@@ -70,8 +70,8 @@ IB_DESIGNABLE @implementation TACardView
     [_previewIndexArray removeAllObjects];
     for (NSUInteger i = 0; i<MIN(_numberOfViewsPreview, _numberOfSubcardViews); i++) {
         if ([_dataSource respondsToSelector:@selector(cardView:viewAtIndex:)]) {
-            UIView* subcard = [_dataSource cardView:self viewAtIndex:i];
-            subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * (i + _currentIndex) % _numberOfSubcardViews);
+            UIView* subcard = [_dataSource cardView:self viewAtIndex:(i + _currentIndex) % _numberOfSubcardViews];
+            subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
             [_containerView addSubview:subcard];
             [_containerView sendSubviewToBack:subcard];
             [_previewIndexArray addObject:@((i + _currentIndex) % _numberOfSubcardViews)];
