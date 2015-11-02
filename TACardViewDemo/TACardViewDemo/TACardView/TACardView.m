@@ -59,6 +59,7 @@ IB_DESIGNABLE @implementation TACardView
     _edgeOffset = 8;
     _containerView = [[UIView alloc] initWithFrame:self.bounds];
     _dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
+    _isCyclicDisplay = YES;
     [self addSubview:_containerView];
 }
 
