@@ -22,6 +22,8 @@
 @property (strong, nonatomic) UIView *anchorContainerView;
 @property (strong, nonatomic) UIView *anchorView;
 @property (nonatomic) BOOL isAttachViewVisible;
+@property (assign, nonatomic) NSInteger currentIndex;
+
 @end
 
 IB_DESIGNABLE @implementation TACardView
@@ -66,13 +68,13 @@ IB_DESIGNABLE @implementation TACardView
     }
     
     [_previewIndexArray removeAllObjects];
-    for (NSUInteger i = 0; i<_numberOfViewsPreview; i++) {
+    for (NSUInteger i = 0; i<MIN(_numberOfViewsPreview, _numberOfSubcardViews); i++) {
         if ([_dataSource respondsToSelector:@selector(cardView:viewAtIndex:)]) {
             UIView* subcard = [_dataSource cardView:self viewAtIndex:i];
-            subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * i);
+            subcard.frame = CGRectMake(0 + _edgeOffset * i, 0 + _edgeOffset * 3 * i, self.frame.size.width - _edgeOffset * 2 * i, self.frame.size.height - _edgeOffset * 2 * (i + _currentIndex) % _numberOfSubcardViews);
             [_containerView addSubview:subcard];
             [_containerView sendSubviewToBack:subcard];
-            [_previewIndexArray addObject:@(i)];
+            [_previewIndexArray addObject:@((i + _currentIndex) % _numberOfSubcardViews)];
             if (i == 0) {
                 [subcard addGestureRecognizer:[[TAPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
             }
@@ -119,6 +121,8 @@ IB_DESIGNABLE @implementation TACardView
             [_anchorView removeFromSuperview];
             _anchorView = nil;
             
+             _currentIndex = (_previewIndexArray.lastObject.unsignedIntegerValue) % _numberOfSubcardViews;
+
             if ([_delegate respondsToSelector:@selector(cardView:endSildeCardView:)]) {
                 [_delegate cardView:self endSildeCardView:currentCard];
             }
